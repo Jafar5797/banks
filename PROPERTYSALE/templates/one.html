@@ -1,0 +1,337 @@
+{% load staticfiles %}
+<html>
+<head>
+  <link href="{% static 'css/dropdown.css' %}" rel="stylesheet" />
+</head>
+
+<body>
+<div align="center">
+<h1><img src="{% static 'images/home.jpg' %}" height="60px" width="60px">
+    online property sale</h1></div>
+<div class="navbar">
+  <a href="{% url 'home' %}">Home</a>
+
+      <div class="dropdown">
+    <button class="dropbtn">PLOT</button>
+    <div class="dropdown-content">
+      <a href="{% url 'newplot' %}">newplot</a>
+      <a href="{% url 'showplot' %}">viewplot</a>
+      <a href="{% url 'editplot' %}">editplot</a>
+    </div>
+  </div>
+
+  <div class="dropdown">
+    <button class="dropbtn">APPRTMENT</button>
+    <div class="dropdown-content">
+      <a href="{% url 'newappartment' %}">new appartment</a>
+      <a href="{% url 'viewappartment' %}">view appartment</a>
+      <a href="{% url 'editappartment' %}">edit appartment</a>
+    </div>
+  </div>
+      <div class="dropdown">
+    <button class="dropbtn">EMPLOYEE</button>
+    <div class="dropdown-content">
+      <a href="#">new employee</a>
+      <a href="#">view employee</a>
+      <a href="#">edit employee</a>
+    </div>
+  </div>
+    <a href="#report">REPORT</a>
+    <a href="{% url 'detailabout' %}">ABOUTUS</a>
+    <a href="{% url 'logout' %}">LOGOUT</a>
+</div><br/><br/><br/>
+{% if welcome %}
+    <h1 style="color: #005cbf">{{ welcome }}</h1>
+{% endif %}
+{% if message %}
+
+<form action="{% url 'newplotsave' %}" method="post">
+    {% csrf_token %}
+
+<table align="center" border="2">
+    <tr>
+        <td>plotno:<input type="number" name="number" required> </td>
+    </tr>
+    <tr>
+        <td>roadno:<input type="number" name="roadno" required></td>
+    </tr>
+    <tr>
+        <td>surveyno:<input type="number" name="surno" required></td>
+    </tr>
+    <tr>
+        <td>costpersqyard:<input type="number" name="sqyno" required></td>
+    </tr>
+    <tr>
+        <td>other expences:<input type="number" name="oexpno" required></td>
+    </tr>
+    <tr>
+        <td>boundaries:<input type="number" name="bouno" required></td>
+    </tr>
+    <tr>
+        <td>facing:<select name="directions">
+            <option>east</option>
+            <option>weast</option>
+            <option>north</option>
+            <option>south</option>
+        </select></td>
+    <tr>
+    <td>status:<select name="status">
+        <option>vacant</option>
+        <option>pending</option>
+        <option>notvacant</option>
+    </select>
+
+    </td>
+</tr>
+    <tr>
+        <td>totalamount:<input type="number" name="amount" required>
+        </td>
+    </tr>
+    <tr><th> <button type="submit">save</button></th></tr>
+</table>
+</form>
+
+{% endif %}
+{% if saved %}
+    {{ saved }}
+{% endif %}
+
+{% if viewplot %}
+    <h2 align="center">{{ viewplot }}</h2>
+<form action="{% url 'viewdetails' %}" method="post">
+{% csrf_token %}
+Enter Plot No<input type="number" name="plotno" required> <br/>
+<button type="submit">view</button>
+</form>
+{% endif %}
+
+{% if details %}
+    <table align="center" border="2">
+    <tr><th>PLOT NO</th>
+    <th>ROAD NO</th>
+    <th>SURVEY NO</th>
+    <th>SQUARE YARD</th>
+    <th>OTHER EXPENCES</th>
+    <th>BOUNDERIES</th>
+    <th>DIRECTIONS</th>
+    <th>STATUS</th>
+        <th>AMOUNT</th></tr>
+    <tr>
+        <td>{{ details.plotno }}</td>
+        <td>{{ details.roadnumber }}</td>
+        <td>{{ details.surveyno }}</td>
+        <td>{{ details.costsqare }}</td>
+        <td>{{ details.otherexpences }}</td>
+        <td>{{ details.boundaries }}</td>
+        <td>{{ details.facing }}</td>
+        <td>{{ details.status }}</td>
+        <td>{{ details.totalcost }}</td>
+    </tr>
+    </table>
+{% endif %}
+
+{% if errordetails %}
+    <h2 align="center" style="color: red"> {{ errordetails }}</h2>
+{% endif %}
+
+{% if editplot %}
+    {{editplot  }}
+    <form action="{% url 'detailsedit' %}" method="post">
+    {% csrf_token %}
+    <input type="number" name="editnumber" required/>
+    <button type="submit">edit</button>
+    </form>
+{% endif %}
+
+{% if plotedit %}
+    <form action="{% url 'saveeditplot' %}" method="post">
+    {% csrf_token %}
+
+<table align="center" border="2">
+    <tr>
+        <td>plotno:<input type="number" name="number" value="{{ plotedit.plotno }}" required readonly> </td>
+    </tr>
+    <tr>
+        <td>roadno:<input type="number" name="roadno" value="{{ plotedit.roadnumber }}" required readonly></td>
+    </tr>
+    <tr>
+        <td>surveyno:<input type="number" name="surno" required value="{{ plotedit.surveyno }}" readonly></td>
+    </tr>
+    <tr>
+        <td>costpersqyard:<input type="number" name="sqyno" required value="{{ plotedit.costsqare }}"></td>
+    </tr>
+    <tr>
+        <td>other expences:<input type="number" name="oexpno" required value="{{ plotedit.otherexpences }}"></td>
+    </tr>
+    <tr>
+        <td>boundaries:<input type="number" name="bouno" required value="{{ plotedit.boundaries }}" readonly></td>
+    </tr>
+    <tr>
+        <td>facing:<select name="directions">
+            <option>east</option>
+            <option>weast</option>
+            <option>north</option>
+            <option>south</option>
+        </select></td>
+    <tr>
+    <td>status:<select name="status">
+        <option>vacant</option>
+        <option>sold</option>
+        <option>booking</option>
+    </select>
+
+    </td>
+</tr>
+    <tr>
+        <td>totalamount:<input type="number" name="amount" required value="{{ plotedit.totalcost }}">
+        </td>
+    </tr>
+    <tr><th> <button type="submit">save</button></th></tr>
+</table>
+</form>
+{% endif %}
+
+{% if editedplot %}
+    {{ editedplot }}
+{% endif %}
+
+{% if editsaved %}
+    <h2 style="color: green" align="center">{{ editsaved }}</h2>
+
+{% endif %}
+
+{% if appartment %}
+    <form action="{% url 'appartmentreg' %}" method="post">
+    {%csrf_token %}
+    <table align="center" border="2">
+    <tr>
+        <td>
+            <input type="text" name="apname" placeholder="APRTMENTNAME" required>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="number" name="apno" placeholder="APRTMENTNUMBER" required>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="number" name="numberofflats" placeholder="NUMBEROFFLATS" required>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="number" name="platcost" placeholder="PLATOFCOST" required>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="number" name="vacancies" placeholder="VACANCIESNO" required>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <button type="submit">save</button>
+        </th>
+    </tr>
+    </table>
+{% endif %}
+{% if appmessage %}
+    {{ appmessage }}
+{% endif %}
+
+</form>
+{% if appview %}
+    <form action="{% url 'viewapp_details' %}" method="post">
+    {% csrf_token %}
+enter appartment no:<input type="number" name="appno" required/><br/>
+    <button type="submit">view</button>
+</form>
+{% endif %}
+
+{% if vappno %}
+    <table align="center" border="2px">
+    <tr>
+        <th>appartmentname</th>
+        <th>appartment no</th>
+        <th>no of flats</th>
+        <th>cost of flat</th>
+        <th>no of flats vacent</th>
+    </tr>
+    <tr>
+        <td>{{ vappno.apartname }}</td>
+        <td>{{ vappno.apartno }}</td>
+        <td>{{ vappno.noofplats }}</td>
+        <td>{{ vappno.costofplat }}</td>
+        <td>{{ vappno.noofvacant }}</td>
+    </tr>
+
+    </table>
+{% endif %}
+
+{% if errorvappno %}
+<h2 style="color: red" align="center">{{ errorvappno }}</h2>
+{% endif %}
+
+{% if edit %}
+    <form action="{% url 'editsavedetail' %}" method="post">
+    {% csrf_token %}
+    editapartment:<input type="number" name="editno" required>
+    <button type="submit">save</button>
+    </form>
+{% endif %}
+{% if detailedit %}
+        <form action="{% url 'editingavailable' %}" method="post">
+    {%csrf_token %}
+    <table align="center" border="2">
+    <tr>
+        <td>
+            <input type="text" name="apname" placeholder="APRTMENTNAME" required
+            value="{{ detailedit.apartname }}" readonly>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="number" name="apno" placeholder="APRTMENTNUMBER" required
+            value="{{ detailedit.apartno }}">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="number" name="numberofflats" placeholder="NUMBEROFFLATS" required
+            value="{{ detailedit.noofplats }}" readonly>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="number" name="platcost" placeholder="PLATOFCOST" required
+            value="{{ detailedit.costofplat }}">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="number" name="vacancies" placeholder="VACANCIESNO" required
+            value="{{ detailedit.noofvacant }}">
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <button type="submit">save</button>
+        </th>
+    </tr>
+    </table>
+{% endif %}
+</form>
+{% if merror %}
+    {{ merror }}
+{% endif %}
+    {%if successedit  %}
+        {{ successedit }}
+        {% endif %}
+{% if detailsabout %}
+    <h3 style="color: #005cbf" align="center">ABOUT US</h3>
+   <h6> online property sale </h6>
+{% endif %}
+</body>
+
+</html>
