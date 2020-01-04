@@ -1,0 +1,112 @@
+{% extends 'userbase.html' %}
+{% load crispy_forms_tags %}
+
+{% block extra_head_content  %}
+    {{ block.super }}
+    
+
+<style type="text/css">
+@media print
+{
+body * { visibility: hidden; }
+#printcontent * { visibility: visible; }
+#printcontent { position: absolute; top: 40px; left: 10px; }
+}
+</style>
+
+    <style type="text/css">
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #printSection,
+      #printSection * {
+        visibility: visible;
+      }
+      #printSection {
+        left:20px;
+        top:40px ;
+        font-size: 20px;
+
+      }
+    }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+        <div class="card shadow col-md-12">
+              <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Quaterly Reports </h6>
+          <button class="btn btn-primary float-right " id="btnPrint">
+            <i class="fas fa-print"></i> Print
+          </button>
+                </div>
+
+          <div class="card-body" id="printSection">            
+          
+              <div class="row">
+                <div class=" col-md-12 mb-0">
+                  
+                  <b> Bank Name : </b> {{ qlist.bankname }}
+                </div>
+                <div class="col-md-12 mb-0">
+                  <b> SPOC : </b> {{ qlist.spoc.name }}
+                </div>
+              </div>
+            <div class="row">
+
+                <div class=" col-md-12 mb-0">
+                  <b>From Date : </b>{{ qlist.fromdate }}
+                </div>
+
+                <div class=" col-md-12 mb-0">
+                  <b> To Date : </b>{{ qlist.todate }}
+                </div>
+
+                <div class="col-md-12 mb-0 text-justify">
+                  <b> requests_recieved : </b>{{ qlist.requests_recieved | safe }}
+                </div>
+                <div class="col-md-12 mb-0 text-justify" >
+                  <b> summary_of_responses : </b>{{  qlist.summary_of_response | safe }}
+                </div>
+              </div>
+              <div class="row">
+
+                <div class=" col-md-12 mb-0 text-justify">
+                  <b> summary_of_workdone : </b>{{ qlist.summary_of_workdone | safe }}
+                </div>
+
+                <div class=" col-md-12 mb-0 text-justify">
+                  <b> learnings : </b>{{ qlist.learnings  | safe }}
+                </div>
+
+                <div class="col-md-12 mb-0" style="padding: 30px;">
+
+
+                
+                <br><br>    <b> Consultants : </b><br>
+              {% for area in qlist.consultants.all %}
+
+              <span>{{ area.name }} :</span> <br> {% endfor %}
+               
+                </div>
+
+
+              </div>
+
+
+
+          </div>
+        
+</div>
+
+<script type="text/javascript">
+document.getElementById("btnPrint").onclick = function() {
+  window.print();
+}
+
+</script>
+        
+{% endblock %}

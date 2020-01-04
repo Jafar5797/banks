@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+      <meta charset = "utf-8">
+      <title>summary</title>
+      <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+     
+</head>
+<body>
+
+	<center><h1>  </h1></center>
+
+	<form  method="POST" action="">{% csrf_token %}
+
+			{{form.as_p}}
+
+       <!--  <button type="submit" id="generate" name='generate_button' value='generate'> Auto Generate</button>
+        <button type="submit" id="fill" name='fill_button' value='fill' >Manual Fill</button><br> -->
+
+       
+
+
+	</form>
+	<table>
+		<tr>
+			<td>
+				<label><b>Requests Received:</b> </label></td><td> <textarea id="reqsRecv" rows='20' cols='100' name='summary of workdone!!!!!!' placeholder="Requests Received">
+					{% for data_x in data %}
+						{{data_x.Topic}}
+ 					{% endfor %}
+				</textarea>
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<label><b>SUMMARY OF Responses:</b> </label></td><td> <textarea id="summary" rows='20' cols='100' name='summary of workdone!!!!!!' placeholder="Summary of Responses">
+	
+					{% for data_x in data %}
+					****************{{data_x.Topic}}*************
+					{{data_x.Response}}
+ 					{% endfor %}
+			</textarea>
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<label><b>SUMMARY OF WORKDONE:</b> </label></td><td> <textarea rows='20' cols='100' name='summary of workdone!!!!!!' placeholder="Summary of work done"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td>
+ 				<label><b>EXPERIENCE GAINED :</b> </label></td><td><textarea rows='20' cols='100' name='exp_gained' placeholder="Experience gained"></textarea>
+ 			</td>
+ 		</tr>
+</table>
+	
+<!-- <script type="text/javascript">
+     	$(document).ready(function(){
+ 			$("#generate").click(function(){
+    			$("#fill").empty();
+    			$("#generate").empty();
+  			});
+
+  			$("#fill").click(function(){
+    			$("#fill").empty();
+    			$("#generate").empty();
+  			});
+		});	
+     </script> -->
+	
+	<button type="submit" id="generate_pdf" name='generate_pdf' value='generate_pdf'> Download PDF!</button>
+
+</body>
+</html>

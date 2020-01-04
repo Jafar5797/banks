@@ -1,0 +1,88 @@
+{% extends 'userbase.html' %}
+{% load crispy_forms_tags %}
+
+{% block extra_head_content  %}
+
+    {{ block.super }}
+    {{ form.media }}
+{% endblock %}
+
+
+{% block body %}
+    		<div class="col-md-12" style="">
+              <div class="card shadow col-md-12">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Create Report </h6>
+                </div>
+                <div class="card-body" >
+	      <form class="user" method="post" id="myForm" enctype="multipart/form-data">
+	                {% csrf_token %}
+
+              <div class="form-row">
+
+                <div class="form-group col-md-6 mb-0">
+                  {{ form.spoc|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-6 mb-0">
+                  {{ form.consultants|as_crispy_field }}
+                </div>
+
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-6 mb-0">
+                  {{ form.bankname|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-6 mb-0">
+                  {{ form.date|as_crispy_field }}
+                </div>
+
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-12 mb-0">
+                  {{ form.topic|as_crispy_field }}
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-6 mb-0">
+                  {{ form.technology_domain|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-6 mb-0">
+                  {{ form.document_type|as_crispy_field }}
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-12 mb-0">
+                  {{ form.query|as_crispy_field }}
+                </div>
+
+                <div class="form-group col-md-12 mb-0">
+                  {{ form.q_attachments|as_crispy_field }}
+                </div>
+
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-12 mb-0">
+                  {{ form.response|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-12 mb-0">
+                  {{ form.res_attachments|as_crispy_field }}
+                </div>
+
+              </div>
+
+
+	                <div class="text-center ">
+	                <button type="submit" class="btn btn-success "> Submit </button>
+	                </div>
+	              </form>
+                </div>
+              </div>
+             </div>
+
+
+{% endblock %}

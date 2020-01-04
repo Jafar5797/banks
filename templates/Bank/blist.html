@@ -1,0 +1,162 @@
+{% extends 'adminbase.html' %}
+{% block extra_head_content  %}
+    {{ block.super }}
+    {{ form.media }}
+
+<style type="text/css">
+@media print
+{
+body * { visibility: hidden; }
+#printcontent * { visibility: visible; }
+#printcontent { position: absolute; top: 40px; left: 10px; }
+}
+</style>
+{% endblock %}
+
+
+{% block body %}
+
+<!-- <div class="col-md-12" style="">
+
+<div class="float-right" style="padding-bottom:  10px;">
+          <button class="btn btn-primary float-right " id="btnPrint">
+            <i class="fas fa-print"></i> Print
+          </button>
+
+</div>
+</div>
+ -->
+  <div class="card-header col-md-12 text-center bg-primary" >
+               <b style="color: white" >Banks List </b>
+              </div>
+   <div class="card shadow col-md-12">
+            <div class="card-header py-3">
+              <div class="float-right">
+              	<a href="/bank/create"> <h6 class="m-0 font-weight-bold text-primary ">
+              	<i class="fas fa-fw fa-plus"></i>
+              	Add Bank</h6></a>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table text-center table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Bank Name</th>
+                      <th>Consultancy Type</th>
+                      <th>SPOC</th>
+                      <th>Consultants </th>
+                      <th>Current Status</th>
+                      <th>Change Status</th>
+                      <th> Actions </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                {% for bank in blist %}
+                    <tr>
+                      <td ><b>{{ bank.name }} </b></td>
+                      <td >{{ bank.consultancy_type }} </td>
+                      <td >{{ bank.spoc.name }} </td>
+                      <td >
+                        {% for cn in bank.consultants.all %}
+                           {{ cn.name }},
+                        {% endfor %}
+                      </td>
+
+                      <td >
+                        {% if bank.is_active == True %} 
+                      <!-- <button class="btn btn-success btn-sm " id="{{ bank.id }}" >  -->
+                        Active
+                        <!-- </button>  -->
+                          {% else %}
+                          Inactive
+                          <!-- <button class="btn btn-danger btn-sm " id="{{ bank.id }}" > 
+                          </button>  -->
+                          {% endif %}
+
+                      </td>
+
+                      <td class="text-center"> 
+                        <div class="{{ bank.id }}" >
+                          {% if bank.is_active == True %} 
+                           <button class="btn btn-danger btn-sm " id="{{ bank.id }}" onclick="Inactivate(this)"> Inactivate
+                          </button> 
+                          {% else %}
+                          <button class="btn btn-success btn-sm " id="{{ bank.id }}" onclick="Activate(this)"> Activate
+                          </button> 
+                          {% endif %}
+                       
+                        </div>
+                      </td>
+                      <td>
+                        <a href="/bank/{{bank.id}}/update/">
+                        <button class="btn btn-info btn-sm " id="{{ bank.id }}">   Edit
+                          </button></a> </td>
+
+<!--                       <td class="text-center "><a href="/bank/{{ bank.id }}/delete">
+                      <button class="btn btn-info btn-sm"></button> -->
+                      </a></td>
+
+                    </tr>
+                {%  endfor %}
+                 </tbody>
+                
+              </table>
+             </div>
+         </div>
+     </div>
+
+
+<script type="text/javascript">
+function Inactivate(ele) {
+  var myid = ele.id;
+$(document).ready(function(){
+    //alert(myid);
+    var url= "/make-inactive/"
+    $.post( url,
+    {
+      id: myid,
+      "csrfmiddlewaretoken" : "{{csrf_token}}"
+    },
+    function(data,status){
+      $('.'+myid).empty()
+      $('.'+myid).append("<b>"+ data + "</b>");
+      
+    });
+  });
+
+}
+
+function Activate(ele) {
+  var myid = ele.id;
+$(document).ready(function(){
+    //alert(myid);
+    var url= "/make-active/"
+    $.post( url,
+    {
+      id: myid,
+      "csrfmiddlewaretoken" : "{{csrf_token}}"
+    },
+    function(data,status){
+      $('.'+myid).empty()
+      $('.'+myid).append("<b>"+ data + "</b>");
+      
+    });
+  });
+
+}
+
+</script>
+<script type="text/javascript">
+document.getElementById("btnPrint").onclick = function() {
+  window.print();
+}
+
+</script>
+
+
+        
+{% endblock %}
+
+

@@ -1,0 +1,115 @@
+{% extends 'adminbase.html' %}
+
+
+{% block body %}
+    
+
+            <div class="card-header col-md-12 text-center bg-primary" >
+                <b style="color: white" >Subject Areas </b>
+              </div>
+
+          <div class="card shadow col-md-12">
+            <div class="card-header py-3">
+              <div class="float-right">
+              	<a href="/td/create/"> <h6 class="m-0 font-weight-bold text-primary ">
+              	<i class="fas fa-fw fa-plus"></i>
+              	Add Subject Area </h6></a>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table text-center table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Subject Area</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                {% for td in tlist %}
+                    <tr>
+                      <td class="text-center" >{{ td.name }} </td>
+                      <td class="text-center">
+                      <a href="/td/{{td.id}}/delete/"><button class="btn btn-danger btn-sm ">Delete </button></a> </td>
+
+
+                    </tr>
+
+                {%  endfor %}
+                 </tbody>
+                
+              </table>
+             </div>
+         </div>
+     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+function Inactivate(ele) {
+  var myid = ele.id;
+$(document).ready(function(){
+    //alert(myid);
+    var url= "/make-inactive/"
+    $.post( url,
+    {
+      id: myid,
+      "csrfmiddlewaretoken" : "{{csrf_token}}"
+    },
+    function(data,status){
+      $('.'+myid).empty()
+      $('.'+myid).append("<b>"+ data + "</b>");
+      
+    });
+  });
+
+}
+
+function Activate(ele) {
+  var myid = ele.id;
+$(document).ready(function(){
+    //alert(myid);
+    var url= "/make-active/"
+    $.post( url,
+    {
+      id: myid,
+      "csrfmiddlewaretoken" : "{{csrf_token}}"
+    },
+    function(data,status){
+      $('.'+myid).empty()
+      $('.'+myid).append("<b>"+ data + "</b>");
+      
+    });
+  });
+
+}
+
+</script>
+
+        
+{% endblock %}
+
+

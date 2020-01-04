@@ -1,0 +1,58 @@
+{% extends 'adminbase.html' %}
+{% load crispy_forms_tags %}
+
+
+
+{% block body %}
+
+
+        <div class="col-md-12" style="">
+                <div class="card shadow col-md-12">
+          {%  for res in results %}
+          <div class="card-body" >
+
+
+              <div class="row">
+                <div class=" col-md-12 mb-0">
+                  
+                  <b> Bank Name : </b> {{ res.bankname }}
+                </div>
+                <div class="col-md-12 mb-0">
+                  <b> SPOC : </b> {{ res.spoc.name }}
+                </div>
+                <div class="col-md-12 mb-0">
+                    <b> Consultants : </b>
+              {% for area in res.consultants.all %}{{ area.name }}, {% endfor %}
+               
+                </div>
+              </div>
+            <div class="row">
+
+                <div class=" col-md-12 mb-0">
+                  <b> Date : </b>{{ res.date }}
+                </div>
+                <div class="col-md-12 mb-0">
+                  <b> Topic : </b>{{ res.topic }}
+                </div>
+                <div class="col-md-12 mb-0">
+                  <b> Query : </b>{{  res.query }}
+                </div>
+              </div>
+              <div class="row">
+
+                <div class=" col-md-12 mb-0">
+                  <b> Response : </b>{{ res.response }}
+                </div>
+              </div>
+          </div>
+          {% empty %}
+          No Records 
+          {%  endfor %}
+        </div></div>
+
+
+
+                
+
+        
+{% endblock %}

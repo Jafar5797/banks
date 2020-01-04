@@ -1,0 +1,32 @@
+{% extends 'adminbase.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} Add bank {% endblock %}
+
+
+{% block body %}
+
+              <div class="card shadow col-md-12"  >
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Add New Bank</h6>
+                </div>
+                <div class="card-body"  >
+	              <form class="user" method="post">
+	                {% csrf_token %}
+
+	                {{form|crispy}}
+	                <div class="text-center ">
+                    <br>
+	                <button type="submit" class="btn btn-success "> Submit </button>
+	                </div>
+	              </form>
+                </div>
+              </div>
+
+
+
+
+        
+{% endblock %}
+
+

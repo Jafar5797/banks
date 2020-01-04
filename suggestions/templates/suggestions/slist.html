@@ -1,0 +1,41 @@
+{% extends 'adminbase.html' %}
+
+
+{% block body %}
+    
+
+        <div class="card-header col-md-12 text-center bg-primary" >
+            <b style="color: white" >Suggestions Recieved </b>
+        </div>
+
+
+      {% for td in slist %}
+
+        <div class="card shadow col-md-12">
+            <div class="card-body">
+        
+          <b> {{ td.name }},{{ td.date }} </b>
+        <br>
+          {{ td.content }}      
+             </div>
+        
+        </div>
+
+                {%  endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+{% endblock %}
+
+
