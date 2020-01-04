@@ -81,7 +81,7 @@ def saveEditPlot(request):
     NewPlot(plotno=epno,roadnumber=eroad,surveyno=esurno,costsqare=esqyno,
             otherexpences=eoexpno,boundaries=ebouno,facing=edirections,status=estatus,
             totalcost=eamount).save()
-    return render(request,"one.html",{"editsaved":"edited values saved successfully"})
+    return render(request,"one.html",{"editsaved":"edited values saved klklk successfully"})
 
 
 def bookappartment(request):
